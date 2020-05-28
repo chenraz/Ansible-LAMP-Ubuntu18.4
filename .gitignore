@@ -1,4 +1,4 @@
 .phpintel
 .vagrant
 vendor
-sites
+sites/*
