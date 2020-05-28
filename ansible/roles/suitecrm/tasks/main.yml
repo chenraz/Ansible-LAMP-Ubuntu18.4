@@ -1,0 +1,44 @@
+---
+
+- name: Configure php
+  lineinfile: 
+    dest: /etc/php/7.3/apache2/php.ini
+    regexp: 'upload_max_filesize ='
+    line: 'upload_max_filesize = 6M'
+  tags:
+    - suitecrm    
+
+- name: Clone SuiteCRM from git
+  git:
+    repo: 'https://github.com/chenraz/SuiteCRM.git'
+    dest: "{{ apache.docroot }}"    
+  ignore_errors: yes
+  register: git_results
+  tags:
+  - suitecrm
+
+- name: Debug git results
+  debug:
+    msg: "{{ git_results }}"
+  when: git_results
+  tags:
+  - suitecrm
+
+- name: Change file ownership
+  file:
+    path: "{{ apache.docroot }}"
+    owner: www-data
+    group: www-data
+    mode: '0755'
+    recurse: yes
+  tags:
+  - suitecrm
+
+- name: composer install
+  composer:
+    command: install
+    working_dir: "{{ apache.docroot }}" 
+  tags:
+  - suitecrm-composer
+  - suitecrm
+  

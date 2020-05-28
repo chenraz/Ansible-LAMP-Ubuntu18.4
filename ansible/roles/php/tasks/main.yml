@@ -54,3 +54,7 @@
 - name: Install php7-intl
   become: yes
   apt: pkg=php7.3-intl state=latest
+
+- name: Install php7-imap
+  become: yes
+  apt: pkg=php7.3-imap state=latest  

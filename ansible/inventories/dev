@@ -1,2 +1,4 @@
-[phansible-web]
-192.168.33.99
+[development]
+development_host ansible_host=127.0.0.1 ansible_port=2222 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=/home/chen/Documents/Projects/suitecrm-vagrant/Ansible-LAMP-Ubuntu18.4/.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
+
+
