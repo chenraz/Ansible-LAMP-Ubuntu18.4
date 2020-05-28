@@ -12,9 +12,3 @@
     - app
     - composer
 
-- hosts: all
-  become: yes 
-  vars_files:
-    - vars/all.yml
-  roles:
-    - suitecrm

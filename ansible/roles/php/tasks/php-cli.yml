@@ -8,3 +8,10 @@
   lineinfile: dest=/etc/php7.3/cli/php.ini
               regexp=';?opcache.enable_cli=\d'
               line='opcache.enable_cli=1'
+
+- name: Configure php max filesize
+  lineinfile: 
+    dest: /etc/php/7.3/apache2/php.ini
+    regexp: 'upload_max_filesize ='
+    line: 'upload_max_filesize = 6M'
+              

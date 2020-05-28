@@ -53,5 +53,5 @@ Vagrant.configure("2") do |config|
         config.vm.provision :shell, path: "ansible/windows.sh", args: ["default"]
     end
 
-    config.vm.synced_folder "./", "/vagrant", type: "nfs"
+    config.vm.synced_folder "./sites", "/vagrant", type: "nfs"
 end
