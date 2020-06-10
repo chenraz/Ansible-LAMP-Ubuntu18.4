@@ -1,0 +1,5 @@
+---
+vagrant_ip: '192.168.33.97'
+vagrant_name: 'democrm'
+vagrant_cpus: 1
+vagrant_memory: 2048 # in MB

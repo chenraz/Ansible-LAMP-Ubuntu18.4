@@ -2,14 +2,28 @@
 - hosts: all
   become: yes
   vars_files:
+    - ../vagrant.default.yml
     - vars/all.yml
+  handlers:
+    - name: reload php-fpm
+      service:
+        name: "php{{ php.version }}-fpm"
+        state: reloaded   
+        
+    - name: reload apache2
+      service:
+        name: "apache2"
+        state: reloaded        
   roles:
     - server
     - vagrant_local
     - apache
     - mysql
     - php
+    - xdebug
     - app
     - composer
     - suitecrm
+
+    
 

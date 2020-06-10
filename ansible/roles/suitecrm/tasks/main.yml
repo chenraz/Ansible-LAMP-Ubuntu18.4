@@ -1,18 +1,37 @@
 ---
 
-- name: Adjust php.ini file seetings
-  lineinfile:
-    dest: /etc/php/7.3/apache2/php.ini
-    regexp: 'upload_max_filesize ='
-    line: 'upload_max_filesize = 6M'
-  tags:
-    - suitecrm
+    - name: Adjust php.ini file seetings
+      lineinfile:
+        dest: /etc/php/7.3/apache2/php.ini
+        regexp: 'upload_max_filesize ='
+        line: 'upload_max_filesize = 6M'
+      tags:
+        - suitecrm
+      notify: 
+        - reload php-fpm
+        - reload apache2
     
-# - name: composer install
-#   composer:
-#     command: install
-#     working_dir: "{{ apache.docroot }}" 
-#   tags:
-#   - suitecrm-composer
-#   - suitecrm
-  
+    - name: Clone the git repo
+      git:
+        repo: "{{ suitecrm_repo }}"
+        dest: "{{ apache.docroot }}"
+    
+    - name: Adjush files owner and permissions
+      file:
+        path: "{{ apache.docroot }}"
+        recurse: yes
+        owner: www-data
+        group: www-data
+        mode: 0755
+    
+    - name: allow group access to folders
+      file:
+        path: "{{ apache.docroot }}/{{ item }}"
+        recurse: yes
+        mode: 0775
+      with_items: "{{ suitecrm_shared_dirs_775 }}"
+      ignore_errors: yes    
+    
+    - name: install with composer
+      composer:
+        working_dir: "{{ apache.docroot }}"   

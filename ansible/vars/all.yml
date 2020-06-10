@@ -5,11 +5,11 @@ server:
     locale: en_GB.UTF-8
 vagrant_local:
     install: '1'
-    vm: { base_box: trusty64, hostname: test, ip: 192.168.33.99, memory: '512', sharedfolder: /vagrant, useVagrantCloud: '1', syncType: nfs }
+    vm: { base_box: trusty64, hostname: "{{ vagrant_name }}", ip: "{{ vagrant_ip }}", memory: "{{ vagrant_memory }}", sharedfolder: /vagrant, useVagrantCloud: '1', syncType: nfs }
 apache:
     install: '1'
     docroot: /vagrant
-    servername: crm.tilnet.co.il
+    servername: demo.suitecrm.co.il
 mysql:
     install: '1'
     root_password: '123'
@@ -20,6 +20,10 @@ mysql:
 php:
     install: '1'
     ppa: php7
-suitecrm:
+    version: '7.3'
+
+xdebug_remote_enable: 1
+xdebug_remote_port: 9001
+xdebug_remote_connect_back: 1        
     
     

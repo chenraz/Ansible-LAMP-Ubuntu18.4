@@ -1,0 +1,9 @@
+suitecrm_repo: https://github.com/salesagility/SuiteCRM.git
+suitecrm_shared_dirs_775: 
+    - cache
+    - custom
+    - modules
+    - themes
+    - data
+    - upload
+    - config_override.php
