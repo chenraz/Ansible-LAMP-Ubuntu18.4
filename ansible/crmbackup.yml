@@ -1,0 +1,27 @@
+---
+-   hosts: all
+    become: yes
+    vars_files:
+        - vars/all.yml
+
+    tasks:
+        -   name: backup db
+            mysql_db:
+                name: "{{ mysql.database }}"
+                login_user: "{{ mysql.user }}"
+                login_password: "{{ mysql.password }}"
+                state: dump
+                target: "{{ suitecrm.db_backup_name }}"
+        -   name: make sure backup folder exists
+            file:
+                path: "{{ suitecrm.backup_dir }}"
+                state: directory
+
+        -   name: rsync root_dir to backup dir
+            synchronize:
+                src: "{{  apache.docroot }}"
+                dest: "{{ suitecrm.backup_dir }}"
+                owner: yes
+                recursive: yes
+                delete: yes
+            delegate_to: "{{ inventory_hostname }}"
