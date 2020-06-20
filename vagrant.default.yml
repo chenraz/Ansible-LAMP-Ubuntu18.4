@@ -1,5 +1,5 @@
 ---
-vagrant_ip: '192.168.33.98'
-vagrant_name: 'suitecrm'
+vagrant_ip: '192.168.33.88'
+vagrant_name: 'tests-suitecrm'
 vagrant_cpus: 1
 vagrant_memory: 2048 # in MB

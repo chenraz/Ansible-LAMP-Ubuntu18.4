@@ -9,7 +9,7 @@ vagrant_local:
 apache:
     install: '1'
     docroot: /vagrant
-    servername: suitecrm.tilnet.co.il
+    servername: crmtests.tilnet.co.il
 mysql:
     install: '1'
     root_password: 'Hv2lnttVOh'
