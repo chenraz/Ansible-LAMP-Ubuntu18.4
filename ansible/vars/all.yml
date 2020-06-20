@@ -9,13 +9,13 @@ vagrant_local:
 apache:
     install: '1'
     docroot: /vagrant
-    servername: demo.suitecrm.co.il
+    servername: suitecrm.tilnet.co.il
 mysql:
     install: '1'
-    root_password: '123'
+    root_password: 'Hv2lnttVOh'
     database: db
-    user: user
-    password: password
+    user: chen
+    password: Hv2lnttVOh
     dump: ''
 php:
     install: '1'
@@ -24,6 +24,10 @@ php:
 
 xdebug_remote_enable: 1
 xdebug_remote_port: 9001
-xdebug_remote_connect_back: 1        
+xdebug_remote_connect_back: 1    
+            
+suitecrm:
+    backup_dir: /backup
+    db_backup_name: "{{ apache.docroot }}/crm-backup.sql"
     
     
