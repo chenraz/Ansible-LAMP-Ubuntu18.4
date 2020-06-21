@@ -17,11 +17,21 @@
     - localhost
 
 - name: mysql | Create databases
-  mysql_db: name={{ mysql.database }} state=present login_user=root login_password={{ mysql.root_password }}
+  mysql_db: 
+    name:
+      - "{{ mysql.database }}" 
+      - "{{ mysql.test_database }}" 
+    state: present 
+    login_user: root 
+    login_password: "{{ mysql.root_password }}"
 
 - name: mysql | Import dump
   mysql_db: name={{ mysql.database }} state=import login_user=root login_password={{ mysql.root_password }} target=/vagrant/{{ mysql.dump }}
   when: mysql.dump
+
+- name: mysql | Import test dump
+  mysql_db: name={{ mysql.test_database }} state=import login_user=root login_password={{ mysql.root_password }} target=/vagrant/{{ mysql.tests_dump }}
+  when: mysql.tests_dump  
 
 - name: mysql | Ensure anonymous users are not in the database
   mysql_user: name='' host={{ item }} state=absent login_user=root login_password={{ mysql.root_password }}
@@ -30,4 +40,10 @@
     - "{{ current_hostname.stdout | lower }}"
 
 - name: mysql | Create users
-  mysql_user: name={{ mysql.user }} password={{ mysql.password }} priv={{ mysql.database }}.*:ALL state=present login_user=root login_password={{ mysql.root_password }}
+  mysql_user: 
+    name: "{{ mysql.user }}"
+    password: "{{ mysql.password }}"
+    priv: "{{ mysql.database }}.*:ALL/{{ mysql.test_database }}.*:ALL"
+    state: present 
+    login_user: root 
+    login_password: "{{ mysql.root_password }}"

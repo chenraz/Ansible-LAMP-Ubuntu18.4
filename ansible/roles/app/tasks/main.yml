@@ -1,2 +1,6 @@
 ---
 # application tasks to be customized and to run after the main provision
+- name: Install xauth
+  become: yes
+  apt:
+    pkg: xauth

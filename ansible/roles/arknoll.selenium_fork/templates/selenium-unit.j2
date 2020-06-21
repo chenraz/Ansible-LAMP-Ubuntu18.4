@@ -1,0 +1,12 @@
+[Unit]
+Description=selenium test framework
+After=syslog.target network.target
+
+[Service]
+ExecStart=java -jar {{ selenium_install_dir }}/selenium/selenium-server-standalone-{{ selenium_version }}.jar -port {{ selenium_port }}
+
+Restart=on-failure
+RestartSec=20s
+
+[Install]
+WantedBy=multi-user.target

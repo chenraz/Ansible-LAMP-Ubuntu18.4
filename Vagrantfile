@@ -46,6 +46,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.network :private_network, ip: vconfig.fetch('vagrant_ip')
     config.ssh.forward_agent = true
+    config.ssh.forward_x11 = true
     config.vm.provision :shell, inline: "apt install -y python-cryptography python-paramiko libssl-dev"
 
     # If ansible is in your path it will provision from your HOST machine

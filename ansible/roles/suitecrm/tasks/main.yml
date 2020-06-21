@@ -1,37 +1,76 @@
 ---
+- name: Adjust php.ini file seetings
+  lineinfile:
+    dest: /etc/php/7.3/apache2/php.ini
+    regexp: 'upload_max_filesize ='
+    line: 'upload_max_filesize = 6M'
+  tags:
+    - suitecrm
+  notify: 
+    - reload php-fpm
+    - reload apache2
 
-    - name: Adjust php.ini file seetings
-      lineinfile:
-        dest: /etc/php/7.3/apache2/php.ini
-        regexp: 'upload_max_filesize ='
-        line: 'upload_max_filesize = 6M'
-      tags:
-        - suitecrm
-      notify: 
-        - reload php-fpm
-        - reload apache2
+- name: Clone the git repo
+  git:
+    repo: "{{ suitecrm_repo }}"
+    dest: "{{ apache.docroot }}"
+
+- name: Adjush files owner and permissions
+  file:
+    path: "{{ apache.docroot }}"
+    recurse: yes
+    owner: www-data
+    group: www-data
+    mode: 0755
+
+- name: allow group access to folders
+  file:
+    path: "{{ apache.docroot }}/{{ item }}"
+    recurse: yes
+    mode: 0775
+  with_items: "{{ suitecrm_shared_dirs_775 }}"
+  ignore_errors: yes    
+
+- name: install with composer
+  composer:
+    working_dir: "{{ apache.docroot }}"   
+    no_dev: no
+
+- name: Create tests env file
+  template:
+    src: .env.test.tpl
+    dest: "{{ apache.docroot }}/.env.test"
+
+- name: Create custom codeception yml file
+  template:
+    src: custom.yml.tpl
+    dest: "{{ apache.docroot }}/tests/_envs"    
+
+# - name: make sure config_override.php exists
+#   file:
+#     path: "{{ apache.docroot }}/config_override.php"
+#     state: touch
+
+# - name: Install chrome driver
+#   command:
+#     cmd: "./vendor/bin/robo chromedriver:install"
+#     chdir: "{{ apache.docroot }}"
+#   tags:
+#     - chrome-driver
+
+- name: build codecept
+  command: 
+    cmd: "./vendor/bin/codecept build"
+    chdir: "{{ apache.docroot }}"    
+
+# - name: Start chrome driver
+#   command:
+#     cmd: "./vendor/bin/robo chromedriver:run"
+#     chdir: "{{ apache.docroot }}"
+#   tags:
+#     - chrome-driver    
     
-    - name: Clone the git repo
-      git:
-        repo: "{{ suitecrm_repo }}"
-        dest: "{{ apache.docroot }}"
-    
-    - name: Adjush files owner and permissions
-      file:
-        path: "{{ apache.docroot }}"
-        recurse: yes
-        owner: www-data
-        group: www-data
-        mode: 0755
-    
-    - name: allow group access to folders
-      file:
-        path: "{{ apache.docroot }}/{{ item }}"
-        recurse: yes
-        mode: 0775
-      with_items: "{{ suitecrm_shared_dirs_775 }}"
-      ignore_errors: yes    
-    
-    - name: install with composer
-      composer:
-        working_dir: "{{ apache.docroot }}"   
+# - name: Test the installation
+#   command:
+#     cms: "/vendor/bin/robo tests:install"
+#     chdir: "{{ apache.docroot }}"    

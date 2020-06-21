@@ -23,6 +23,14 @@
     - xdebug
     - app
     - composer
+    - role: geerlingguy.java
+      tags: [java]
+    - role: arknoll.selenium_fork
+      tags: [selenium]
+      vars:
+        selenium_version: "3.141.59"
+        selenium_install_firefox: no
+        selenium_install_chrome: yes    
     - suitecrm
 
     

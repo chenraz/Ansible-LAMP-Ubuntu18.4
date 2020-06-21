@@ -14,9 +14,11 @@ mysql:
     install: '1'
     root_password: 'Hv2lnttVOh'
     database: db
+    test_database: db-tests
     user: chen
     password: Hv2lnttVOh
     dump: ''
+    tests_dump: ''
 php:
     install: '1'
     ppa: php7
@@ -27,7 +29,15 @@ xdebug_remote_port: 9001
 xdebug_remote_connect_back: 1    
             
 suitecrm:
+    url: "{{ apache.docroot }}/{{ apache.servername }}"
     backup_dir: /backup
     db_backup_name: "{{ apache.docroot }}/crm-backup.sql"
+    tests:
+        database_driver: MYSQL
+        admin_user: tester
+        admin_password: 123
+
+selenium_port: 9515
+
     
     
