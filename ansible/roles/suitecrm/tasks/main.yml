@@ -70,7 +70,32 @@
 #   tags:
 #     - chrome-driver    
     
-# - name: Test the installation
-#   command:
-#     cms: "/vendor/bin/robo tests:install"
-#     chdir: "{{ apache.docroot }}"    
+- name: Populate db test API data
+  mysql_db:
+    state: import
+    name: "{{ mysql.test_database }}"
+    target: "{{ apache.docroot }}/tests/_data/demo_users.sql"
+    login_user: root 
+    login_password: "{{ mysql.root_password }}"    
+  tags:
+    - db-test-data
+  register: test_api_results
+
+- name: Populate db test users data
+  mysql_db:
+    state: import
+    name: "{{ mysql.test_database }}"
+    target: "{{ apache.docroot }}/tests/_data/demo_users.sql"
+    login_user: root 
+    login_password: "{{ mysql.root_password }}"    
+  tags:
+    - db-test-data    
+  register: test_users_results
+
+- name: report importing test data test_api_results
+  debug:
+    msg: |
+      "api results: {{ test_api_results }}"
+      "users results: {{ test_users_results }}"
+  tags:
+    - db-test-data           
