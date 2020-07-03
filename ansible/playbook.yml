@@ -24,6 +24,7 @@
     - app
     - composer
     - suitecrm
+    - elastic_search
 
     
 

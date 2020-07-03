@@ -1,0 +1,4 @@
+---
+
+-   name: Install elastic search on docker
+    docker_compose:
