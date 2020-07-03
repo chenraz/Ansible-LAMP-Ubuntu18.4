@@ -12,6 +12,18 @@ The `sites/` directory is synced to `/vagrant` within your virtual machine so ad
 
 Template Vhosts can be created to automate the setting up of your sites.
 
+# Run tests
+vargant ssh
+
+cd /vagrant-nfs/
+
+
+## start the selenum server:
+java -jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver /opt/selenium/selenium-server-standalone-3.141.59.jar -port 9515
+
+## run acceptance tests:
+./vendor/bin/codecept run acceptance --env custom [--html]
+
 # PHP Installs
 - PHP 7.3
 - PHP 7.3-xml
