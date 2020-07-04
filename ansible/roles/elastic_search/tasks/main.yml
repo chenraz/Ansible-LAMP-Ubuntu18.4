@@ -1,0 +1,22 @@
+---
+
+-   name: Install elastic search on docker
+    docker_compose:
+        project_name: elasticsearch
+        definition:
+            version: '3'
+            services:
+                elasticsearch:
+                    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.10
+                    container_name: elasticsearch
+                    restart: unless-stopped
+                    ports:
+                        - 9200:9200
+                        - 9300:9300
+                    environment:
+                        - discovery.type=single-node
+                        - xpack.security.enabled=false
+                        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"            
+    delegate_to: localhost
+    tags:
+        - elastic-search
