@@ -22,6 +22,8 @@
     - php
     - xdebug
     - app
+    - role: docker
+      tags: [docker]       
     - composer
     - suitecrm
     - elastic_search
