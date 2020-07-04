@@ -1,0 +1,6 @@
+---
+-   name: Install python modules
+    pip:
+        name: "{{ pip.packages }}"
+        executable: "{{ pip.executable }}"
+    when: pip.packages is defined

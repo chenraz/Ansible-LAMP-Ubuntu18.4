@@ -11,7 +11,8 @@
 - name: Install Extra Packages
   become: yes
   apt: 
-    pkg: server.packages state=latest
+    pkg: "{{ server.packages  }}"
+    state: latest
   when: server.packages is defined
 
 - name: Configure the timezone

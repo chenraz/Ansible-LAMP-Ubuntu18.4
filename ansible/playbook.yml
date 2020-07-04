@@ -17,16 +17,20 @@
   roles:
     - server
     - vagrant_local
+    - role: python
+      tags: [python]
     - apache
-    - mysql
+    - role: mysql
+      tags: [mysql]
     - php
     - xdebug
     - app
     - role: docker
-      tags: [docker]       
+      tags: [docker]    
+    - role: elastic_search
+      tags: [elastic-search]
     - composer
     - suitecrm
-    - elastic_search
 
     
 

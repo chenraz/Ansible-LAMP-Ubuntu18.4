@@ -3,6 +3,12 @@ server:
     install: '1'
     timezone: UTC
     locale: en_GB.UTF-8
+    packages: [ 'apt-transport-https', 'ca-certificates', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+pip:
+    packages: [PyMySQL]
+    executable: /usr/bin/pip3
+
 vagrant_local:
     install: '1'
     vm: { base_box: trusty64, hostname: "{{ vagrant_name }}", ip: "{{ vagrant_ip }}", memory: "{{ vagrant_memory }}", sharedfolder: /vagrant, useVagrantCloud: '1', syncType: nfs }
